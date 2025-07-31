@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧾 Chequealo
 
-## Getting Started
+Chequealo es una herramienta que te ayuda a revisar tus resúmenes de tarjeta de crédito o débito de manera simple, rápida y segura. Detecta automáticamente cargos duplicados, cuotas mal aplicadas, débitos automáticos no reconocidos y otros errores comunes que pueden pasar desapercibidos.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🧐 ¿Por qué existe Chequealo?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Millones de personas pierden dinero todos los meses por:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Cargos duplicados o confusos en su resumen
+- Cuotas cobradas todas juntas o mal procesadas
+- Débitos automáticos que ya no deberían estar activos
+- Errores que requieren horas de revisión manual
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Chequealo analiza tu resumen con inteligencia artificial y te avisa si hay algo raro. ¡Así podés tomar acción a tiempo y cuidar tu plata!
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 ¿Qué hace esta landing?
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Este sitio web es la **landing page oficial de Chequealo**, donde los usuarios pueden:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Entender el problema que resuelve
+- Conocer cómo funciona la solución
+- Sumarse a una **lista de espera** (waitlist) con su email para acceder primero al lanzamiento
 
-## Deploy on Vercel
+Está desarrollado con:
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Supabase](https://supabase.com/) para almacenar emails
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📬 ¿Querés ser de los primeros en probarlo?
+
+Sumate a la waitlist desde [https://chequealo.vercel.app](https://chequealo.vercel.app)
+
+---
