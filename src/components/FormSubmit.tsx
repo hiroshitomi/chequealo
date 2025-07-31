@@ -24,23 +24,27 @@ const FormSubmit = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 w-full max-w-sm">
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="tu@email.com"
-        className="w-full px-4 py-2 border border-blue-300 rounded-md focus:outline-none"
-        required
-      />
-      <button
-        type="submit"
-        className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+    <>
+      <form
+        onSubmit={handleSubmit}
+        className="mt-4 flex flex-col sm:flex-row justify-center gap-2 max-w-md mx-auto"
       >
-        Quiero que me avisen
-      </button>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Ingresá tu email"
+          className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+        >
+          Quiero probarlo
+        </button>
+      </form>
       <p className="text-sm text-blue-600 mt-2">{status}</p>
-    </form>
+    </>
   );
 };
 
