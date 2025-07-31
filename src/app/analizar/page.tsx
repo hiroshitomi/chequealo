@@ -2,10 +2,19 @@
 
 import {useState} from "react";
 import Dropzone from "../analizar/components/Dropzone";
-import ResultViewer from "../analizar/components/ResultViewer";
+// import ResultViewer from "../analizar/components/ResultViewer";
+
+interface movimiento {
+  fecha: string;
+  referencia: string;
+  cuota: string;
+  comprobante: string;
+  pesos: number;
+  dolares: number;
+}
 
 export default function AnalizarPage() {
-  const [movimientos, setMovimientos] = useState<any | null>(null);
+  const [movimientos, setMovimientos] = useState<movimiento[] | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handlePDF = async (file: File) => {

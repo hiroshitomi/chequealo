@@ -3,24 +3,24 @@ import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
 GlobalWorkerOptions.workerPort = null;
 GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.mjs';
 
-// export async function parsePdf(file: File) {
-//   const buffer = await file.arrayBuffer();
-//   const pdf = await getDocument({ data: buffer }).promise;
+interface movimiento {
+  fecha: string,
+  referencia: string,
+  cuota: string,
+  comprobante: string,
+  pesos: number,
+  dolares: number,
+}
 
-//   let fullText = "";
+interface PdfTextItem {
+  str: string;
+  transform: number[];
+}
 
-//   for (let i = 1; i <= pdf.numPages; i++) {
-//     const page = await pdf.getPage(i);
-//     const content = await page.getTextContent();
-//     const text = content.items.map((item: any) => item.str).join(" ");
-//     fullText += text + "\n";
-//   }
-
-//   const movimientos = extractMovimientos(fullText);
-//   console.log(movimientos)
-
-//   return movimientos;
-// }
+interface LineItem {
+  str: string;
+  y: number;
+}
 
 export async function parsePdf(file: File) {
   const buffer = await file.arrayBuffer();
@@ -31,7 +31,9 @@ export async function parsePdf(file: File) {
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
 
-    const lines = content.items.reduce<any[][]>((acc, item: any) => {
+    const items = content.items as PdfTextItem[];
+
+    const lines = items.reduce<LineItem[][]>((acc, item) => {
       const y = item.transform[5];
       const lastLine = acc[acc.length - 1];
 
@@ -58,7 +60,7 @@ export async function parsePdf(file: File) {
 }
 
 function extractMovimientos(text: string) {
-  const movimientos: any[] = [];
+  const movimientos: movimiento[] = [];
   const lines = text.split("\n").slice(28); // empieza desde la línea 28
   console.log("lines", lines)
 
