@@ -2,7 +2,7 @@
 
 import {useState} from "react";
 import Dropzone from "../analizar/components/Dropzone";
-// import ResultViewer from "../analizar/components/ResultViewer";
+import ResultViewer from "../analizar/components/ResultViewer";
 
 interface movimiento {
   fecha: string;
@@ -21,16 +21,13 @@ export default function AnalizarPage() {
     setLoading(true);
     const {parsePdf} = await import("../lib/parseGaliciaPdf");
     const data = await parsePdf(file);
-    console.log("data del parser", data);
     setMovimientos(data);
     setLoading(false);
   };
 
   return (
-    <main className="p-4 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold text-center mb-4">
-        Chequeá tu resumen
-      </h1>
+    <main className="p-4 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold text-center mb-4">Chequealo</h1>
 
       <Dropzone onFileAccepted={handlePDF} />
 
@@ -38,8 +35,7 @@ export default function AnalizarPage() {
         <p className="mt-4 text-center text-sm">Procesando archivo…</p>
       )}
 
-      {/* {movimientos && <ResultViewer data={movimientos} />} */}
-      <pre>{JSON.stringify(movimientos, null, 2)}</pre>
+      {movimientos && <ResultViewer data={movimientos} />}
     </main>
   );
 }

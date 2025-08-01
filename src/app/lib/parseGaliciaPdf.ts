@@ -27,7 +27,8 @@ export async function parsePdf(file: File) {
   const pdf = await getDocument({ data: buffer }).promise;
 
   let fullText = "";
-  for (let i = 1; i <= 1; i++) {
+  for (let i = 1; i <= pdf.numPages; i++) {
+    console.log("num pages: ", pdf.numPages)
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
 
@@ -51,11 +52,9 @@ export async function parsePdf(file: File) {
       .join("\n");
 
     fullText += text + "\n";
-    console.log("fulltext", fullText)
   }
-
   const movimientos = extractMovimientos(fullText);
-
+  // const movimientos = extractMovimientosVisa(fullText);
   return movimientos;
 }
 
@@ -69,7 +68,6 @@ function extractMovimientos(text: string) {
 
   for (const line of lines) {
     const match = line.match(regex);
-    console.log("match", match)
     if (match) {
       const [, fechaRaw, referencia, cuotaRaw, comprobante, pesosRaw, dolaresRaw] = match;
 
@@ -88,7 +86,6 @@ function extractMovimientos(text: string) {
       });
     }
   }
-  console.log("movimientos", movimientos)
   return movimientos;
 }
 
@@ -97,51 +94,45 @@ function formatFecha(fecha: string) {
   return `20${yy}-${mm}-${dd}`;
 }
 
-function parseMonto(valor: string) {
-  return parseFloat(valor.replace(/\./g, "").replace(",", "."));
+function parseMonto(monto: string): number {
+  return parseFloat(monto.replace(/\./g, '').replace(',', '.'));
 }
 
-// function extractMovimientos(text: string) {
-//   const movimientos: any[] = [];
-//   const regex = /(\d{2}\/\d{2}) (.+?) (\d+,\d{2})/g;
-//   let match;
-
-//   while ((match = regex.exec(text)) !== null) {
-//     movimientos.push({
-//       fecha: match[1],
-//       descripcion: match[2].trim(),
-//       monto: match[3],
-//     });
-//   }
-
-//   return movimientos;
-// }
-
-// function extractMovimientos(text: string) {
-//   const movimientos: any[] = [];
+// function extractMovimientosVisa(text: string): movimiento[] {
 //   const lines = text.split("\n");
+//   const movimientos: movimiento[] = [];
 
-//   const regex = /^(\d{2}\/\d{2})\s+(.+?)\s+(-?\$?\d{1,3}(?:\.\d{3})*,\d{2})$/;
+//   let parsing = false;
+
+//   const regex = /^\s*(\d{2}-\w{3}-\d{2})\s+(.+?)\s+(\d{2}\/\d{2})?\s*(\d{5})?\s+([\d.]+,\d{2})(?:\s+([\d.]+,\d{2}))?/;
 
 //   for (const line of lines) {
-//     const match = line.match(regex);
+//     // Detecta la cabecera
+//     if (!parsing && line.toUpperCase().includes("FECHA") && line.toUpperCase().includes("REFERENCIA")) {
+//       parsing = true;
+//       continue;
+//     }
 
-//     if (match) {
-//       const [_, fecha, descripcion, montoRaw] = match;
+//     // Empieza a parsear solo después de la cabecera
+//     if (parsing) {
+//       const match = line.match(regex);
 
-//       // Limpia símbolos y convierte a número
-//       const monto = parseFloat(
-//         montoRaw.replace(/\./g, "").replace(",", ".").replace("$", "")
-//       );
+//       // Si no hay match con una fecha → terminar parseo
+//       if (!match) break;
+
+//       const [, fechaRaw, referencia, cuota = "", comprobante = "", pesosRaw, dolaresRaw] = match;
+//       console.log("match: ", match)
 
 //       movimientos.push({
-//         fecha,
-//         descripcion: descripcion.trim(),
-//         monto,
+//         fecha: formatFechaVisa(fechaRaw), // ej: 14-Oct-24 → 2024-10-14
+//         referencia: referencia.trim(),
+//         cuota,
+//         comprobante,
+//         pesos: parseMonto(pesosRaw),
+//         dolares: dolaresRaw ? parseMonto(dolaresRaw) : 0,
 //       });
 //     }
 //   }
 
 //   return movimientos;
 // }
-

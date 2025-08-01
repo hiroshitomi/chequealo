@@ -18,7 +18,7 @@ export default function Dropzone({
 
   return (
     <div
-      className="border-2 border-dashed border-gray-300 p-6 rounded-xl text-center cursor-pointer"
+      className="border-2 border-dashed border-gray-300 p-6 rounded-xl text-center cursor-pointer mb-2"
       onClick={() => inputRef.current?.click()}
     >
       <p className="text-sm text-gray-600">Tocá para subir tu resumen PDF</p>
