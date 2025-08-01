@@ -28,7 +28,6 @@ export async function parsePdf(file: File) {
 
   let fullText = "";
   for (let i = 1; i <= pdf.numPages; i++) {
-    console.log("num pages: ", pdf.numPages)
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
 
@@ -61,7 +60,6 @@ export async function parsePdf(file: File) {
 function extractMovimientos(text: string) {
   const movimientos: movimiento[] = [];
   const lines = text.split("\n").slice(28); // empieza desde la línea 28
-  console.log("lines", lines)
 
   const regex = /^\s+(\d{2}-\d{2}-\d{2})\s+\*?\s*(.+?)\s+(?:(\d{2}\/\d{2})\s+)?(\d+)\s+([\d.]+,\d{2})(?:\s+([\d.]+,\d{2}))?$/;
 
