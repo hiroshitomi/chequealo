@@ -19,7 +19,7 @@ export default function AnalizarPage() {
 
   const handlePDF = async (file: File) => {
     setLoading(true);
-    const {parsePdf} = await import("../lib/parseGaliciaPdf");
+    const {parsePdf} = await import("../lib/parsePdf");
     const data = await parsePdf(file);
     setMovimientos(data);
     setLoading(false);

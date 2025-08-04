@@ -1,16 +1,8 @@
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
+import { parsers } from "@/app/lib/parsers";
 
 GlobalWorkerOptions.workerPort = null;
 GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.mjs';
-
-interface movimiento {
-  fecha: string,
-  referencia: string,
-  cuota: string,
-  comprobante: string,
-  pesos: number,
-  dolares: number,
-}
 
 interface PdfTextItem {
   str: string;
@@ -51,51 +43,58 @@ export async function parsePdf(file: File) {
       .join("\n");
 
     fullText += text + "\n";
+    console.log(fullText)
   }
-  const movimientos = extractMovimientos(fullText);
-  // const movimientos = extractMovimientosVisa(fullText);
-  return movimientos;
+  const parser = parsers.find((p) => p.detect(fullText));
+  if (!parser) throw new Error("No se reconoce el banco");
+
+  return parser.parse(fullText);
 }
 
-function extractMovimientos(text: string) {
-  const movimientos: movimiento[] = [];
-  const lines = text.split("\n").slice(28); // empieza desde la línea 28
+// function extractMovimientos(text: string) {
+//   const movimientos: movimiento[] = [];
+//   const lines = text.split("\n").slice(28); // empieza desde la línea 28
 
-  const regex = /^\s+(\d{2}-\d{2}-\d{2})\s+\*?\s*(.+?)\s+(?:(\d{2}\/\d{2})\s+)?(\d+)\s+([\d.]+,\d{2})(?:\s+([\d.]+,\d{2}))?$/;
+//   const regex = /^\s+(\d{2}-\d{2}-\d{2})\s+\*?\s*(.+?)\s+(?:(\d{2}\/\d{2})\s+)?(\d+)\s+([\d.]+,\d{2})(?:\s+([\d.]+,\d{2}))?$/;
 
 
-  for (const line of lines) {
-    const match = line.match(regex);
-    if (match) {
-      const [, fechaRaw, referencia, cuotaRaw, comprobante, pesosRaw, dolaresRaw] = match;
+//   for (const line of lines) {
+//     const match = line.match(regex);
+//     if (match) {
+//       const [, fechaRaw, referencia, cuotaRaw, comprobante, pesosRaw, dolaresRaw] = match;
 
-      const fecha = formatFecha(fechaRaw); // "15-10-24" → "2024-10-15"
-      const pesos = parseMonto(pesosRaw);
-      const dolares = dolaresRaw ? parseMonto(dolaresRaw) : 0;
-      const cuota = cuotaRaw ?? "";
+//       const fecha = formatFecha(fechaRaw); // "15-10-24" → "2024-10-15"
+//       const pesos = parseMonto(pesosRaw);
+//       const dolares = dolaresRaw ? parseMonto(dolaresRaw) : 0;
+//       const cuota = cuotaRaw ?? "";
 
-      movimientos.push({
-        fecha,
-        referencia: referencia.trim(),
-        cuota,
-        comprobante,
-        pesos,
-        dolares,
-      });
-    }
-  }
-  return movimientos;
-}
+//       movimientos.push({
+//         fecha,
+//         referencia: referencia.trim(),
+//         cuota,
+//         comprobante,
+//         pesos,
+//         dolares,
+//       });
+//     }
+//   }
+//   return movimientos;
+// }
 
-function formatFecha(fecha: string) {
-  const [dd, mm, yy] = fecha.split("-");
-  return `20${yy}-${mm}-${dd}`;
-}
+// function formatFecha(fecha: string) {
+//   const [dd, mm, yy] = fecha.split("-");
+//   return `20${yy}-${mm}-${dd}`;
+// }
 
-function parseMonto(monto: string): number {
-  return parseFloat(monto.replace(/\./g, '').replace(',', '.'));
-}
+// function parseMonto(monto: string): number {
+//   return parseFloat(monto.replace(/\./g, '').replace(',', '.'));
+// }
 
+
+
+
+
+// VIEJO
 // function extractMovimientosVisa(text: string): movimiento[] {
 //   const lines = text.split("\n");
 //   const movimientos: movimiento[] = [];
