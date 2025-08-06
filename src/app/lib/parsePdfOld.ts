@@ -1,5 +1,4 @@
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
-import { parsers } from "@/app/lib/parsers";
 
 GlobalWorkerOptions.workerPort = null;
 GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.mjs';
@@ -45,10 +44,11 @@ export async function parsePdf(file: File) {
     fullText += text + "\n";
     console.log(fullText)
   }
-  const parser = parsers.find((p) => p.detect(fullText));
-  if (!parser) throw new Error("No se reconoce el banco");
+  // const parser = parsers.find((p) => p.detect(fullText));
+  // if (!parser) throw new Error("No se reconoce el banco");
 
-  return parser.parse(fullText);
+  return fullText;
+  // return parser.parse(fullText);
 }
 
 // function extractMovimientos(text: string) {
