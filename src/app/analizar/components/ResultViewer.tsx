@@ -37,7 +37,7 @@ export default function ResultViewer({data}: ResultViewerProps) {
 
   return (
     <ScrollArea className="max-h-[500px] w-full">
-      <div className="gap-2 grid grid-cols-2">
+      <div className="gap-2 grid grid-cols-1 md:grid-cols-2">
         {data.map((tx, idx) => {
           const duplicated = isDuplicated(tx);
 
@@ -51,10 +51,10 @@ export default function ResultViewer({data}: ResultViewerProps) {
               <CardContent className="p-0 flex flex-col gap-1">
                 <div className="flex justify-between">
                   <div className="text-sm text-muted-foreground">
-                    {tx.fecha}
+                    Fecha: {tx.fecha}
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    {tx.cuota}
+                    Cuota: {tx.cuota}
                   </div>
                 </div>
                 <div className="flex justify-between">
