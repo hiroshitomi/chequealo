@@ -2,8 +2,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 
 const tarjetas = [
-  { value: "visa", label: "Visa", disponible: true },
-  { value: "mastercard", label: "Mastercard", disponible: false },
+  { value: "Visa", label: "Visa", disponible: true },
+  { value: "Mastercard", label: "Mastercard", disponible: false },
   { value: "amex", label: "American Express", disponible: false },
 ];
 
