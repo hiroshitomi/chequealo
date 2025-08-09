@@ -2,19 +2,14 @@
 
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import ResultViewer from "../components/ResultViewer";
 import {Movimiento} from "@/app/types/Movimiento";
 import {Loader2} from "lucide-react";
+import { SelectBanco } from "./SelectBanco";
+import { SelectTarjeta } from "./SelectTarjeta";
 
-const bancos = ["Galicia", "ICBC"];
-const tarjetas = ["Visa", "Mastercard (Próximamente)"];
+// const bancos = ["Galicia", "ICBC"];
+// const tarjetas = ["Visa", "Mastercard (Próximamente)"];
 
 export function BankCardUploader() {
   const [banco, setBanco] = useState("");
@@ -52,7 +47,9 @@ export function BankCardUploader() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-4 flex-col md:flex-row">
-        <Select onValueChange={setBanco} disabled={isLoading}>
+        <SelectBanco onChange={setBanco} disabled={isLoading}/>
+        <SelectTarjeta onChange={setTarjeta} disabled={isLoading}/>
+        {/* <Select onValueChange={setBanco} disabled={isLoading}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Banco" />
           </SelectTrigger>
@@ -76,7 +73,7 @@ export function BankCardUploader() {
               </SelectItem>
             ))}
           </SelectContent>
-        </Select>
+        </Select> */}
       </div>
 
       {/* Input oculto para personalizar label */}

@@ -22,11 +22,11 @@ const parserMap: Record<
   string,
   Record<string, () => (text: string) => Movimiento[]>
 > = {
-  Galicia: {
+  galicia: {
     Visa: () => galiciaVisaParser,
     Mastercard: () => galiciaMastercardParser,
   },
-  ICBC: {
+  icbc: {
     Visa: () => icbcVisaParser,
     Mastercard: () => icbcMastercardParser,
   },
