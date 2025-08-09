@@ -13,7 +13,7 @@ import ResultViewer from "../components/ResultViewer";
 import {Movimiento} from "@/app/types/Movimiento";
 import {Loader2} from "lucide-react";
 
-const bancos = ["Galicia", "ICBC (Próximamente)"];
+const bancos = ["Galicia", "ICBC"];
 const tarjetas = ["Visa", "Mastercard (Próximamente)"];
 
 export function BankCardUploader() {
