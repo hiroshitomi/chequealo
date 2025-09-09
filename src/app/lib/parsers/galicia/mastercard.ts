@@ -21,35 +21,37 @@ export const galiciaMastercardParser = (text: string): Movimiento[] => {
   }
 
   // Procesar desde el inicio hasta encontrar totales o fin de sección
+  // Ahora procesa TODAS las páginas, no solo la primera
   const transactionLines = lines.slice(startIndex);
   
   for (const line of transactionLines) {
-    // Detener si encontramos totales o fin de sección
-    if (line.includes("SUBTOTAL") || line.includes("TOTAL A PAGAR") || line.includes("Página")) {
+    // Detener solo si encontramos totales reales, no en "Página" para continuar con páginas siguientes
+    if (line.includes("SUBTOTAL") || line.includes("TOTAL A PAGAR") || line.includes("TOTAL GENERAL")) {
       break;
     }
     
-    // Logging temporal para debugging
-    console.log(`Procesando línea: "${line}"`);
+    // Saltar líneas de encabezado de página pero continuar procesando
+    if (line.includes("Página") || line.includes("DETALLE DEL CONSUMO") || line.trim() === "") {
+      continue;
+    }
 
-    // Regex para capturar transacciones con formato: DD-Mon-YY DESCRIPCION CUOTAS COMPROBANTE PESOS DOLARES
+    // Regex para capturar transacciones con formato: [ESPACIO] DD-Mon-YY DESCRIPCION CUOTAS COMPROBANTE PESOS [DOLARES]
     // Formato de fecha: DD-Mon-YY (ej: 12-May-24, 02-Jun-24)
-    // Las columnas CUOTAS y COMPROBANTE pueden estar vacías
-    const regex = /^(\d{2}-[A-Za-z]{3}-\d{2})\s+(.+?)\s+(\d+\/\d+|\s+)\s+(\d+|\s+)\s+([\d.]+\,\d{2})\s+([\d.]+\,\d{2})$/;
+    // Las columnas CUOTAS, COMPROBANTE y DOLARES pueden estar vacías
+    const regex = /^\s+(\d{2}-[A-Za-z]{3}-\d{2})\s+(.+?)\s+(\d+\/\d+|\s+)\s+(\d+|\s+)\s+([\d.]+\,\d{2})(?:\s+([\d.]+\,\d{2}))?$/;
     const match = line.match(regex);
     
     // Si no hace match con el regex principal, intentar con un regex más flexible
     let matchFlexible = null;
     if (!match) {
       // Regex más flexible que maneja espacios variables y columnas opcionales
-      const regexFlexible = /^(\d{2}-[A-Za-z]{3}-\d{2})\s+(.+?)\s+([\d\/]+|\s+)\s+([\d]+|\s+)\s+([\d.]+\,\d{2})\s+([\d.]+\,\d{2})$/;
+      const regexFlexible = /^\s+(\d{2}-[A-Za-z]{3}-\d{2})\s+(.+?)\s+([\d\/]+|\s+)\s+([\d]+|\s+)\s+([\d.]+\,\d{2})(?:\s+([\d.]+\,\d{2}))?$/;
       matchFlexible = line.match(regexFlexible);
     }
     
     const finalMatch = match || matchFlexible;
     
     if (finalMatch) {
-      console.log(`✓ Match encontrado:`, finalMatch);
       const [, fechaRaw, referencia, cuotasRaw, comprobante, pesosRaw, dolaresRaw] = finalMatch;
       
       // Limpiar datos
@@ -69,7 +71,8 @@ export const galiciaMastercardParser = (text: string): Movimiento[] => {
       
       const fecha = formatFechaGalicia(fechaRaw);
       const pesos = parseMonto(pesosRaw);
-      const dolares = parseMonto(dolaresRaw);
+      // Si no hay campo de dólares, usar 0
+      const dolares = dolaresRaw ? parseMonto(dolaresRaw) : 0;
       
       // Formatear información de cuotas
       let cuotaInfo = "";
@@ -85,12 +88,9 @@ export const galiciaMastercardParser = (text: string): Movimiento[] => {
         pesos,
         dolares,
       });
-    } else {
-      console.log(`✗ No match para línea: "${line}"`);
     }
   }
   
-  console.log(`Total de movimientos procesados: ${movimientos.length}`);
   return movimientos;
 };
 
