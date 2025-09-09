@@ -9,7 +9,7 @@ import {Badge} from "@/components/ui/badge";
 
 const tarjetas = [
   {value: "Visa", label: "Visa", disponible: true},
-  {value: "Mastercard", label: "Mastercard", disponible: false},
+  {value: "Mastercard", label: "Mastercard", disponible: true},
   {value: "amex", label: "American Express", disponible: false},
 ];
 

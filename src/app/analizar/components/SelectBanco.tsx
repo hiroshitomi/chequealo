@@ -9,7 +9,7 @@ import {Badge} from "@/components/ui/badge";
 
 const bancos = [
   {value: "galicia", label: "Galicia", disponible: true},
-  {value: "icbc", label: "ICBC", disponible: false},
+  {value: "icbc", label: "ICBC", disponible: true},
   {value: "santander", label: "Santander", disponible: false},
 ];
 

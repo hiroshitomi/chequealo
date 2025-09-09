@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import {useState} from "react";
 
 const FormSubmit = () => {
@@ -9,16 +10,16 @@ const FormSubmit = () => {
     e.preventDefault();
     setStatus("Cargando...");
 
-    const res = await fetch("/api/join", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({email}),
-    });
-
-    if (res.ok) {
-      setStatus("¡Te agregamos a la lista!");
-      setEmail("");
-    } else {
+    try {
+      const res = await axios.post("/api/send", {email});
+      if (res.status === 200) {
+        setStatus("¡Te agregamos a la lista!");
+        setEmail("");
+      } else {
+        setStatus("Hubo un error, intentá de nuevo.");
+      }
+    } catch (error) {
+      console.log({error});
       setStatus("Hubo un error, intentá de nuevo.");
     }
   };
