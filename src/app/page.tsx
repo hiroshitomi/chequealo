@@ -1,7 +1,9 @@
 import FormSubmit from "@/components/FormSubmit";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function Home() {
+  redirect("/demo");
   return (
     <main className="min-h-screen bg-gray-50 text-gray-800 font-sans">
       {/* Header + CTA */}
