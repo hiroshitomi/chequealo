@@ -137,7 +137,7 @@ const NewLandingPage = () => {
                   </h3>
                   <p className="text-gray-600">
                     Netflix, Spotify, gym... se acumulan sin que te des cuenta. 
-                    $2,000+ por mes en suscripciones "fantasma".
+                    $2,000+ por mes en suscripciones &quot;fantasma&quot;.
                   </p>
                 </div>
               </div>
