@@ -15,7 +15,7 @@ export const getWaitlistEmailHTML = (name: string = "Usuario") => {
           <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold;">
             ¡Bienvenido a Chequealo! 🎉
           </h1>
-          <p style="color: #e0e7ff; margin: 10px 0 0 0; font-size: 16px;">
+          <p style="color: white; margin: 10px 0 0 0; font-size: 16px;">
             La herramienta que revolucionará el análisis de tus extractos bancarios
           </p>
         </div>
@@ -41,12 +41,6 @@ export const getWaitlistEmailHTML = (name: string = "Usuario") => {
             <p style="color: #1e40af; margin: 0; font-weight: 500;">
               <strong>¿Qué sigue?</strong> Te mantendremos informado sobre nuestro progreso y serás uno de los primeros en probar Chequealo cuando esté listo.
             </p>
-          </div>
-
-          <div style="text-align: center; margin: 40px 0;">
-            <a href="#" style="background: linear-gradient(135deg, #2250f4 0%, #1e40af 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: 600; font-size: 16px; box-shadow: 0 4px 6px rgba(34, 80, 244, 0.3);">
-              Conocer más sobre Chequealo
-            </a>
           </div>
         </div>
 
